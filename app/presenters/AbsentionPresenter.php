@@ -4,11 +4,26 @@ use Nette\Application\UI;
 
 class AbsentionPresenter extends BasePresenter
 {
+  /** @permission(absention, viewMine) */
+  public function renderDefault()
+  {
+    $this->template->absentions = $this->table('absentions')
+      ->where('teacher_id', $this->context->user->identity->data["id"])
+      ->order('date DESC');
+  }
+
+  public function resolveHours($hours)
+  {
+    $resolved = array();
+    for ($i = 0; $i <= 8; $i++) {
+      if ($hours & $i) $resolved[] = $i;
+    }
+    return $resolved;
+  }
+
   /** @permission(absention, report) */
   public function renderReport()
-  {
-    
-  }
+  {}
 
   public function processReportForm(UI\Form $form)
   {

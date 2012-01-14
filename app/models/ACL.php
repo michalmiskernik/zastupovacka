@@ -15,7 +15,7 @@ class ACL extends NS\Permission
     $this->addResource('absention');
     $this->addResource('list');
 
-    $this->allow(self::TEACHER, 'absention', 'report');
+    $this->allow(self::TEACHER, 'absention', array('report', 'viewMine'));
 
     $this->allow(self::ADMIN, 'list', 'create');
   }
