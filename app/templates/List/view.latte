@@ -1,0 +1,12 @@
+{block #content}
+{var $prev = NULL}
+<table>
+  <tr n:foreach="$substitutions as $s">
+    <td n:inner-if="$s->absention !== $prev">{$s->absention->teacher->surname}</td>
+    <td>{$s->hour}</td>
+    <td>{$s->class->name}</td>
+    <td>{$s->subject->abbr}</td>
+    <td>{$s->substitute->surname}</td>
+    {var $prev = $s->absention}
+  </tr>
+</table>
