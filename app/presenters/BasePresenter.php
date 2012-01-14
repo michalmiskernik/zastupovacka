@@ -33,4 +33,35 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
       return $writer->write('if ($user->isAllowed(%var, %var)):', $resource, $privilege);
     }, 'endif');
   }
+
+  public function startup()
+  {
+    parent::startup();
+
+    $reflection = $this->reflection;
+    try {
+      $name = $this->formatActionMethod($this->action);
+      $method = $reflection->getMethod($name);
+      $this->checkPermissions($method);
+    } catch (ReflectionException $e) {}
+
+    try {
+      $name = $this->formatRenderMethod($this->view);
+      $method = $reflection->getMethod($name);
+      $this->checkPermissions($method);
+    } catch (ReflectionException $e) {}
+  }
+
+  private function checkPermissions(Reflector $reflector)
+  {
+    $annotation = $reflector->getAnnotation('permission');
+    if (is_null($annotation)) return;
+
+    $resource = $annotation[0];
+    $privilege = $annotation[1];
+
+    if (!$this->user->isAllowed($resource, $privilege)) {
+      throw new Nette\Application\ForbiddenRequestException;
+    }
+  }
 }
