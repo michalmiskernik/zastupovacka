@@ -39,6 +39,17 @@
 					{/if}
 				</ul>
 
+				{if $user->loggedIn}
+				<ul class="unstyled">
+					<li n:ifAllowed="report absention">
+						<a n:href="Absention:report">nahlásiť chýbanie</a>
+					</li>
+					<li n:ifAllowed="create list">
+						<a n:href="List:create">vytvoriť novú zastupovačku</a>
+					</li>
+				</ul>
+				{/if}
+
 				<ul class="unstyled">
 					<li><a n:href="List:today">dnes</a></li>
 					<li><a n:href="List:tomorrow">zajtra</a></li>

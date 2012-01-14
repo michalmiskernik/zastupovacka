@@ -22,6 +22,9 @@ services:
   
   authenticator:
     class: SSHAuthenticator(..., %ssh.host%, %ssh.port%)
+  
+  authorizator:
+    class: ACL
 
 
 factories:
