@@ -1,7 +1,7 @@
-{block #title}{$date->format('m. d.')}{/block}
+{block #title}{$date->format('d. n.')}{/block}
 
 {block #content}
-<h2>{$date->format('m. d. Y')}</h2>
+<h2>{$date->format('d. n. Y')}</h2>
 
 {if $list}
 {var $prev = NULL}

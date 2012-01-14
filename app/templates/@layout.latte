@@ -34,7 +34,7 @@
 					<li><a n:href="List:today">dnes</a></li>
 					<li><a n:href="List:tomorrow">zajtra</a></li>
 					<li n:foreach="$__lists as $list">
-						<a n:href="List:view $list->date->format('Y-m-d')">{$list->date->format('m. d.')}</a>
+						<a n:href="List:view $list->date->format('Y-m-d')">{$list->date->format('d. n.')}</a>
 					</li>
 				</ul>
 			</div>
