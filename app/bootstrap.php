@@ -16,10 +16,10 @@ Debugger::$logDirectory = __DIR__ . '/../log';
 Debugger::$strictMode = TRUE;
 Debugger::enable(Debugger::DEVELOPMENT);
 
-
 // Configure application
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(__DIR__ . '/../temp');
+$configurator->setProductionMode(FALSE);
 
 // Enable RobotLoader - this will load all classes automatically
 $configurator->createRobotLoader()
