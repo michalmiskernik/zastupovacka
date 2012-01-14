@@ -14,6 +14,13 @@ class ListPresenter extends BasePresenter
     $this->setView('view');
   }
 
+  public function renderTomorrow()
+  {
+    $date = new \DateTime('tomorrow');
+    $this->loadList($date);
+    $this->setView('view');
+  }
+
   public function renderView($date)
   {
     $date = new \DateTime($date);
@@ -22,8 +29,12 @@ class ListPresenter extends BasePresenter
 
   protected function loadList(\DateTime $date)
   {
+    $this->template->date = $date;
     $list = $this->table('lists')->where('date', $date)->fetch();
     $this->template->list = $list;
+
+    if (!$list) return;
+
     $this->template->substitutions = $list
       ->related('substitutions')->order('absention_id');
   }

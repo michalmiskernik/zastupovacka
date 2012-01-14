@@ -1,4 +1,7 @@
 {block #content}
+<h2>{$date->format('m. d. Y')}</h2>
+
+{if $list}
 {var $prev = NULL}
 <table>
   <tr n:foreach="$substitutions as $s">
@@ -10,3 +13,6 @@
     {var $prev = $s->absention}
   </tr>
 </table>
+{else}
+<p>Na tento deň zastupovačka ešte neexistuje.</p>
+{/if}
