@@ -8,5 +8,8 @@
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-
+  protected function table($name)
+  {
+    return $this->context->database->table($name);
+  }
 }
