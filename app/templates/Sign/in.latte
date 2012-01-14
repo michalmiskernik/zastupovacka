@@ -1,7 +1,44 @@
-{var $robots = noindex}
+{block #title}Prihlásiť sa{/block}
 
 {block #content}
 
-<h1>Sign in</h1>
+{form signInForm}
+<fieldset>
+  <legend>Prihlásiť sa</legend>
 
-{control signInForm}
+  <div class="alert-message error" n:foreach="$form->errors as $error">
+    {$error}
+  </div>
+
+  <div class="clearfix">
+    {label username /}
+    <div class="input">
+      {input username}
+    </div>
+  </div>
+
+  <div class="clearfix">
+    {label password /}
+    <div class="input">
+      {input password}
+    </div>
+  </div>
+
+  <div class="clearfix">
+    <div class="input">
+      <ul class="inputs-list">
+        <li>
+          {label remember}
+          {input remember}
+          Zapamätať si ma
+          {/label}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="actions">
+    {input send class => "btn primary"}
+  </div>
+</fieldset>
+{/form}

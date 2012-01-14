@@ -1,5 +1,7 @@
 parameters:
-
+  ssh:
+    host: localhost
+    port: 22
 
 php:
   date.timezone: Europe/Bratislava
@@ -17,6 +19,9 @@ services:
     setup:
       - setCacheStorage(...)
       - setDatabaseReflection( Nette\Database\Reflection\DiscoveredReflection() )
+  
+  authenticator:
+    class: SSHAuthenticator(..., %ssh.host%, %ssh.port%)
 
 
 factories:

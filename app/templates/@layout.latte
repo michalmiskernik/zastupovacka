@@ -24,12 +24,21 @@
 		<div class="row">
 			<div class="span12" id="content">
 
-				<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+				<div n:foreach="$flashes as $flash" class="alert-message {$flash->type}">{$flash->message}</div>
 
 				{include #content}
 			</div>
 
 			<div class="span4" id="sidebar">
+				<ul class="unstyled">
+					{if $user->loggedIn}
+					<li>{$user->identity->first_name} {$user->identity->surname}</li>
+					<li><a n:href="Sign:out">odhlásiť sa</a></li>
+					{else}
+					<li><a n:href="Sign:in">prihlásiť sa</a></li>
+					{/if}
+				</ul>
+
 				<ul class="unstyled">
 					<li><a n:href="List:today">dnes</a></li>
 					<li><a n:href="List:tomorrow">zajtra</a></li>
