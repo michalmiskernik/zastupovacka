@@ -7,11 +7,11 @@
 
 	<title>{ifset #title}{include #title} | {/ifset}Zastupovačka</title>
 
+	<link rel="stylesheet" type="text/css" href="{$basePath}/css/bootstrap.css">
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css" type="text/css">
 	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css" type="text/css">
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 	<script type="text/javascript" src="{$basePath}/js/netteForms.js"></script>
 	{block head}{/block}
 </head>
@@ -19,8 +19,21 @@
 <body>
 	<script> document.body.className+=' js' </script>
 
-	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+	<div class="container">
 
-	{include #content}
+		<div class="row">
+			<div class="span12" id="content">
+
+				<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+
+				{include #content}
+			</div>
+
+			<div class="span4" id="sidebar">
+
+			</div>
+		</div>
+
+	</div>
 </body>
 </html>
