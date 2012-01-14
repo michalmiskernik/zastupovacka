@@ -31,8 +31,6 @@ common:
 				- setCacheStorage(...)
 				#- setDatabaseReflection( Nette\Database\Reflection\DiscoveredReflection() )
 
-		authenticator: Authenticator( @database::table(users) )
-
 
 	factories:
 
