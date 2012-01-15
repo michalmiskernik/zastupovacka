@@ -5,7 +5,7 @@
 
 <ul class="tabs" n:ifAllowed="edit list">
   <li class="active"><a n:href="view $date->format('Y-m-d')">zobraziť</a></li>
-  <li><a n:href="edit">upraviť</a></li>
+  <li><a n:href="edit $date->format('Y-m-d')">upraviť</a></li>
   <li><a href="javascript:window.print()">vytlačiť</a></li>
 </ul>
 
