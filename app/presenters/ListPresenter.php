@@ -9,20 +9,6 @@ class ListPresenter extends BasePresenter
     $this->template->lists = $this->table('lists')->order('date');
   }
 
-  public function renderToday()
-  {
-    $date = new \DateTime('today');
-    $this->loadList($date);
-    $this->setView('view');
-  }
-
-  public function renderTomorrow()
-  {
-    $date = new \DateTime('tomorrow');
-    $this->loadList($date);
-    $this->setView('view');
-  }
-
   public function renderView($date)
   {
     $date = new \DateTime($date);
