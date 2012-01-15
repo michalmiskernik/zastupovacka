@@ -27,8 +27,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     $set = new Nette\Latte\Macros\MacroSet($latte->compiler);
     $set->addMacro('ifAllowed', function ($node, $writer) {
-      $action = $node->tokenizer->fetchWord();
       $privilege = $node->tokenizer->fetchWord();
+      $resource = $node->tokenizer->fetchWord();
 
       return $writer->write('if ($user->isAllowed(%var, %var)):', $resource, $privilege);
     }, 'endif');

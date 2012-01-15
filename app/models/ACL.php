@@ -17,7 +17,7 @@ class ACL extends NS\Permission
 
     $this->allow(self::TEACHER, 'absention', array('report', 'viewMine'));
 
-    $this->allow(self::ADMIN, 'list', 'create');
+    $this->allow(self::ADMIN, 'list', array('create', 'edit'));
   }
 
   public function isAllowed($role = self::ALL, $resource = self::ALL, $privilege = self::ALL)
