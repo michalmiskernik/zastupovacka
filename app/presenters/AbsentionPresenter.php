@@ -16,7 +16,7 @@ class AbsentionPresenter extends BasePresenter
   {
     $resolved = array();
     for ($i = 0; $i <= 8; $i++) {
-      if ($hours & $i) $resolved[] = $i;
+      if ($hours & pow(2, $i)) $resolved[] = $i;
     }
     return $resolved;
   }
