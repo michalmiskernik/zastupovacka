@@ -38,8 +38,8 @@ if ($container->session->exists()) {
 
 // Setup router
 $router = $container->router;
-$router[] = new Route('index.php', 'List:today', Route::ONE_WAY);
-$router[] = new Route('<presenter>/<action>[/<id>]', 'List:today');
+$router[] = new Route('index.php', 'List:view', Route::ONE_WAY);
+$router[] = new Route('<presenter>/<action>[/<id>]', 'List:view');
 
 
 // Configure and run the application!
