@@ -6,7 +6,7 @@ class ListPresenter extends BasePresenter
 
   public function renderDefault()
   {
-    $this->template->lists = $this->table('lists')->order('date');
+    $this->template->lists = $this->table('lists')->order('date DESC');
   }
 
   public function renderView($date)
