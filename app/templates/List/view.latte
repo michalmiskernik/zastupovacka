@@ -1,7 +1,7 @@
 {block #title}{$date->format('d. n.')}{/block}
 
 {block #content}
-<h2>{$date->format('d. n. Y')}</h2>
+<h1>{$date->format('d. n. Y')}</h1>
 
 <ul class="tabs" n:ifAllowed="edit list">
   <li class="active"><a n:href="view $date->format('Y-m-d')">zobraziť</a></li>
@@ -11,7 +11,7 @@
 
 {if $list}
 {var $prev = NULL}
-<table>
+<table class="list">
   <tr n:foreach="$substitutions as $s">
     <td n:inner-if="$s->absention !== $prev">{$s->absention->teacher->surname}</td>
     <td>{$s->hour}</td>
