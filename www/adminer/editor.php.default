@@ -1,0 +1,51 @@
+<?php
+
+function adminer_object()
+{
+  
+  class AdminerSoftware extends Adminer
+  {
+    
+    function name() { return 'Zastupovačka'; }
+
+    function credentials()
+    {
+      return array('*host*', '*user*', '*pass*');
+    }
+
+    function database() { return '*dbname*'; }
+
+    function login($username, $password)
+    {
+      return ($username == 'admin' && $password == 'pass');
+    }
+
+    function rowDescription($table)
+    {
+      switch ($table) {
+        case 'teachers':
+          return "CONCAT(first_name, ' ', surname)";
+        case 'lists':
+          return "DATE_FORMAT(date, '%e. %c. %Y')";
+        case 'classes':
+          return "name";
+        case 'subjects':
+          return "abbr";
+        case 'absentions':
+          return "CONCAT((
+            SELECT CONCAT(t.first_name, ' ', t.surname)
+            FROM teachers AS t
+            WHERE t.id = absentions.teacher_id
+          ), ', ', DATE_FORMAT(date, '%e. %c. %Y'))";
+        default:
+          return '';
+      }
+    }
+
+  }
+
+  return new AdminerSoftware;
+
+}
+
+include __DIR__ . "/editor.inc.php";
