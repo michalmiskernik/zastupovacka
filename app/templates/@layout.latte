@@ -16,7 +16,7 @@
 	{block head}{/block}
 </head>
 
-<body>
+<body n:class="$user->loggedIn ? logged-in">
 	<script> document.body.className+=' js' </script>
 
 	<div class="container" id="wrapper">

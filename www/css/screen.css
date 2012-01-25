@@ -2,8 +2,14 @@
   padding-top: 20px;
 }
 
-table.list {
+.logged-in table.list {
   margin-top: -19px;
+}
+
+table.list .class,
+table.list .hour,
+table.list .subject {
+	width: 50px;
 }
 
 #ajax-spinner {
