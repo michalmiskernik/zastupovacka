@@ -34,6 +34,8 @@ class Engine extends Nette\Object
 	{
 		$this->parser = new Parser;
 		$this->compiler = new Compiler;
+		$this->compiler->defaultContentType = Compiler::CONTENT_XHTML;
+
 		Macros\CoreMacros::install($this->compiler);
 		$this->compiler->addMacro('cache', new Macros\CacheMacro($this->compiler));
 		Macros\UIMacros::install($this->compiler);
@@ -49,9 +51,7 @@ class Engine extends Nette\Object
 	 */
 	public function __invoke($s)
 	{
-		return $this->compiler
-			->setContext(Compiler::CONTEXT_HTML)
-			->compile($this->parser->parse($s));
+		return $this->compiler->compile($this->parser->parse($s));
 	}
 
 

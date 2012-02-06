@@ -117,7 +117,7 @@ class Statement extends \PDOStatement
 			} elseif ($type === IReflection::FIELD_BOOL) {
 				$row[$key] = ((bool) $value) && $value !== 'f' && $value !== 'F';
 
-			} elseif ($type === IReflection::FIELD_DATETIME) {
+			} elseif ($type === IReflection::FIELD_DATETIME || $type === IReflection::FIELD_DATE || $type === IReflection::FIELD_TIME) {
 				$row[$key] = new Nette\DateTime($value);
 
 			}
@@ -177,9 +177,9 @@ class Statement extends \PDOStatement
 	/**
 	 * @return Nette\Reflection\ClassType
 	 */
-	public /**/static/**/ function getReflection()
+	public static function getReflection()
 	{
-		return new Nette\Reflection\ClassType(/*5.2*$this*//**/get_called_class()/**/);
+		return new Nette\Reflection\ClassType(get_called_class());
 	}
 
 

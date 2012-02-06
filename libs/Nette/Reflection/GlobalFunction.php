@@ -54,28 +54,6 @@ class GlobalFunction extends \ReflectionFunction
 
 
 	/**
-	 * @return array
-	 */
-	public function getDefaultParameters()
-	{
-		return Method::buildDefaultParameters(parent::getParameters());
-	}
-
-
-
-	/**
-	 * Invokes function using named parameters.
-	 * @param  array
-	 * @return mixed
-	 */
-	public function invokeNamedArgs($args)
-	{
-		return $this->invokeArgs(Method::combineArgs($this->getDefaultParameters(), $args));
-	}
-
-
-
-	/**
 	 * @return Nette\Callback
 	 */
 	public function toCallback()
@@ -130,9 +108,9 @@ class GlobalFunction extends \ReflectionFunction
 	/**
 	 * @return ClassType
 	 */
-	public /**/static/**/ function getReflection()
+	public static function getReflection()
 	{
-		return new ClassType(/*5.2*$this*//**/get_called_class()/**/);
+		return new ClassType(get_called_class());
 	}
 
 

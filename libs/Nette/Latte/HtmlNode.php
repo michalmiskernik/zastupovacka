@@ -19,7 +19,6 @@ use Nette;
  * HTML element node.
  *
  * @author     David Grudl
- * @internal
  */
 class HtmlNode extends Nette\Object
 {
@@ -38,6 +37,9 @@ class HtmlNode extends Nette\Object
 	/** @var bool */
 	public $closing = FALSE;
 
+	/** @var string */
+	public $attrCode;
+
 	/** @var int */
 	public $offset;
 
@@ -46,7 +48,6 @@ class HtmlNode extends Nette\Object
 	public function __construct($name)
 	{
 		$this->name = $name;
-		$this->isEmpty = isset(Nette\Utils\Html::$emptyElements[strtolower($this->name)]);
 	}
 
 }

@@ -7,32 +7,14 @@ use Nette,
 	Nette\Diagnostics\Debugger;
 
 ?>
-<style>
-
-	#nette-debug .nette-RoutingPanel table {
-		font: 9pt/1.5 Consolas, monospace;
-	}
-
-	#nette-debug .nette-RoutingPanel .yes td {
-		color: green;
-	}
-
-	#nette-debug .nette-RoutingPanel .may td {
-		color: #67F;
-	}
-
-	#nette-debug .nette-RoutingPanel pre, #nette-debug .nette-RoutingPanel code {
-		display: inline;
-	}
-
-</style>
+<style>#nette-debug .nette-RoutingPanel table{font:9pt/1.5 Consolas,monospace}#nette-debug .nette-RoutingPanel .yes td{color:green}#nette-debug .nette-RoutingPanel .may td{color:#67F}#nette-debug .nette-RoutingPanel pre,#nette-debug .nette-RoutingPanel code{display:inline}</style>
 
 <div class="nette-RoutingPanel">
 <h1>
 <?php if (empty($this->request)): ?>
 	no route
 <?php else: ?>
-	<?php echo $this->request->getPresenterName() . ':' . (isset($this->request->parameters[Presenter::ACTION_KEY]) ? $this->request->parameters[Presenter::ACTION_KEY] : Presenter::DEFAULT_ACTION) . (isset($this->request->parameters[Presenter::SIGNAL_KEY]) ? " {$this->request->parameters[Presenter::SIGNAL_KEY]}!" : '') ?>
+	<?php echo htmlSpecialChars($this->request->getPresenterName() . ':' . (isset($this->request->parameters[Presenter::ACTION_KEY]) ? $this->request->parameters[Presenter::ACTION_KEY] : Presenter::DEFAULT_ACTION) . (isset($this->request->parameters[Presenter::SIGNAL_KEY]) ? " {$this->request->parameters[Presenter::SIGNAL_KEY]}!" : '')) ?>
 <?php endif ?>
 </h1>
 
@@ -96,7 +78,7 @@ use Nette,
 		<?php endforeach ?>
 		</code></td>
 
-		<td><code><?php echo $router['module'] ?></code></td>
+		<td><code><?php echo htmlSpecialChars($router['module']) ?></code></td>
 
 		<td><?php if ($router['request']): ?><code>
 		<?php $params = $router['request']->getParameters(); ?>

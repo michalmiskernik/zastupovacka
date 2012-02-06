@@ -43,11 +43,17 @@ class MacroNode extends Nette\Object
 	/** @var MacroTokenizer */
 	public $tokenizer;
 
-	/** @var int @internal */
-	public $offset;
-
 	/** @var MacroNode */
 	public $parentNode;
+
+	/** @var string */
+	public $openingCode;
+
+	/** @var string */
+	public $closingCode;
+
+	/** @var string */
+	public $attrCode;
 
 	/** @var string */
 	public $content;
@@ -57,6 +63,8 @@ class MacroNode extends Nette\Object
 
 	/** @var HtmlNode  for n:attr macros */
 	public $htmlNode;
+
+	public $saved;
 
 
 
@@ -78,15 +86,6 @@ class MacroNode extends Nette\Object
 	{
 		$this->args = (string) $args;
 		$this->tokenizer->tokenize($this->args);
-	}
-
-
-
-	public function close($content)
-	{
-		$this->closing = TRUE;
-		$this->content = $content;
-		return $this->macro->nodeClosed($this);
 	}
 
 }

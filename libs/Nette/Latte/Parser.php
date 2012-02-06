@@ -31,7 +31,7 @@ class Parser extends Nette\Object
 
 	/** @var string default macro syntax */
 	public $defaultSyntax = 'latte';
-	
+
 	/** @var array */
 	public $syntaxes = array(
 		'latte' => array('\\{(?![\\s\'"{}])', '\\}'), // {...}
@@ -62,6 +62,9 @@ class Parser extends Nette\Object
 	/** @var string used by filter() */
 	private $endTag;
 
+	/** @var bool */
+	private $xmlMode;
+
 	/** @internal states */
 	const CONTEXT_TEXT = 'text',
 		CONTEXT_CDATA = 'cdata',
@@ -79,8 +82,11 @@ class Parser extends Nette\Object
 	 */
 	public function parse($input)
 	{
+		if (substr($input, 0, 3) === "\xEF\xBB\xBF") { // BOM
+	    	$input = substr($input, 3);
+	    }
 		if (!Strings::checkEncoding($input)) {
-			throw new ParseException('Template is not valid UTF-8 stream.');
+			throw new Nette\InvalidArgumentException('Template is not valid UTF-8 stream.');
 		}
 		$input = str_replace("\r\n", "\n", $input);
 		$this->input = $input;
@@ -90,6 +96,7 @@ class Parser extends Nette\Object
 		$this->setSyntax($this->defaultSyntax);
 		$this->setContext(self::CONTEXT_TEXT);
 		$this->lastTag = $this->endTag = NULL;
+		$this->xmlMode = (bool) preg_match('#^<\?xml\s#m', $input);
 
 		while ($this->offset < strlen($input)) {
 			$matches = $this->{"context".$this->context[0]}();
@@ -178,7 +185,7 @@ class Parser extends Nette\Object
 
 		if (!empty($matches['end'])) { // end of HTML tag />
 			$this->addToken(Token::TAG_END, $matches[0]);
-			$this->setContext(self::CONTEXT_TEXT);
+			$this->setContext(!$this->xmlMode && in_array($this->lastTag, array('script', 'style')) ? self::CONTEXT_CDATA : self::CONTEXT_TEXT);
 
 		} elseif (!empty($matches['attr'])) { // HTML attribute
 			$token = $this->addToken(Token::ATTRIBUTE, $matches[0]);
@@ -227,7 +234,7 @@ class Parser extends Nette\Object
 	private function contextComment()
 	{
 		$matches = $this->match('~
-			(?<htmlcomment>--\s*>)|    ##  end of HTML comment
+			(?P<htmlcomment>--\s*>)|   ##  end of HTML comment
 			'.$this->macroRe.'         ##  macro
 		~xsi');
 
@@ -295,7 +302,7 @@ class Parser extends Nette\Object
 		if (isset($this->syntaxes[$type])) {
 			$this->setDelimiters($this->syntaxes[$type][0], $this->syntaxes[$type][1]);
 		} else {
-			throw new ParseException("Unknown syntax '$type'");
+			throw new Nette\InvalidArgumentException("Unknown syntax '$type'");
 		}
 		return $this;
 	}
@@ -383,14 +390,16 @@ class Parser extends Nette\Object
 			$this->endTag = '/' . $this->lastTag;
 			$token->type = Token::COMMENT;
 
-		} elseif ($token->type === Token::TAG_END && in_array($this->lastTag, array('script', 'style'))) {
-			$this->setContext(self::CONTEXT_CDATA);
-
 		} elseif ($token->type === Token::TAG_END && $this->lastTag === $this->endTag) {
 			$this->setSyntax($this->defaultSyntax);
 
 		} elseif ($token->type === Token::MACRO && $token->name === 'contentType') {
-			$this->setContext(Strings::contains($token->value, 'html') ? self::CONTEXT_TEXT : self::CONTEXT_NONE);
+			if (preg_match('#html|xml#', $token->value, $m)) {
+				$this->xmlMode = $m[0] === 'xml';
+				$this->setContext(self::CONTEXT_TEXT);
+			} else {
+				$this->setContext(self::CONTEXT_NONE);
+			}
 		}
 	}
 

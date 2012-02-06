@@ -8,6 +8,10 @@ php:
   # session.save_path: "%tempDir%/sessions"
   # zlib.output_compression: yes
 
+nette:
+  session:
+    autoStart: smart
+    expiration: +14days
 
 services:
   database:
@@ -25,6 +29,3 @@ services:
   
   authorizator:
     class: ACL
-
-
-factories:

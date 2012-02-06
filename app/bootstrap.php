@@ -10,31 +10,24 @@ use Nette\Diagnostics\Debugger,
 // Load Nette Framework
 require LIBS_DIR . '/Nette/loader.php';
 
-
-// Enable Nette Debugger for error visualisation & logging
-Debugger::$logDirectory = __DIR__ . '/../log';
-Debugger::$strictMode = TRUE;
-Debugger::enable(Debugger::DEVELOPMENT);
-
 // Configure application
 $configurator = new Nette\Config\Configurator;
-$configurator->setTempDirectory(__DIR__ . '/../temp');
-$configurator->setProductionMode(FALSE);
+
+// Enable Nette Debugger for error visualisation & logging
+$configurator->setProductionMode("192.168.87.101");
+$configurator->enableDebugger(__DIR__ . '/../log');
 
 // Enable RobotLoader - this will load all classes automatically
+$configurator->setTempDirectory(__DIR__ . '/../temp');
 $configurator->createRobotLoader()
 	->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
 	->register();
 
 // Create Dependency Injection container from config.neon file
-$configurator->addConfig(__DIR__ . '/config/config.neon');
+$configurator->addConfig(__DIR__ . '/config/config.neon',
+  $configurator->productionMode ? $configurator::PRODUCTION : $configurator::DEVELOPMENT);
 $container = $configurator->createContainer();
-
-// Opens already started session
-if ($container->session->exists()) {
-	$container->session->start();
-}
 
 // Setup router
 $router = $container->router;
