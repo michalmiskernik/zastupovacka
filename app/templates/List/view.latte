@@ -1,7 +1,7 @@
-{block #title}{$date->format('d. n.')}{/block}
+{block #title}{$date->format('j. n.')}{/block}
 
 {block #content}
-<h1>{$date->format('d. n. Y')}</h1>
+<h1>{$date->format('j. n. Y')}</h1>
 
 <ul class="nav nav-tabs" n:ifAllowed="edit list">
   <li class="active"><a n:href="view $date->format('Y-m-d')">zobraziť</a></li>

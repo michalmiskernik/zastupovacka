@@ -4,6 +4,6 @@
 
 <ul>
   <li n:foreach="$lists as $list">
-    <a n:href="view $list->date->format('Y-m-d')">{$list->date->format('d. n. Y')}</a>
+    <a n:href="view $list->date->format('Y-m-d')">{$list->date->format('j. n. Y')}</a>
   </li>
 </ul>
