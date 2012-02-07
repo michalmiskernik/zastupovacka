@@ -19,16 +19,17 @@
 <body n:class="$user->loggedIn ? logged-in">
 	<script> document.body.className+=' js' </script>
 
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="brand" href="{$basePath}/">zastupovačka</a>
+			</div>
+		</div>
+	</div>
+
 	<div class="container-fluid" id="wrapper">
 
 		<div class="row-fluid">
-			<div class="span9" id="content">
-
-				<div n:foreach="$flashes as $flash" class="alert-message {$flash->type}">{$flash->message}</div>
-
-				{include #content}
-			</div>
-
 			<div class="span3" id="sidebar">
 				<ul class="nav nav-list">
 					{if $user->loggedIn}
@@ -58,6 +59,13 @@
 						<a n:href="List:view $list->date->format('Y-m-d')">{$list->date->format('d. n.')}</a>
 					</li>
 					<li><a n:href="List:default">všetky</a></li>
+			</div>
+
+			<div class="span9" id="content">
+
+				<div n:foreach="$flashes as $flash" class="alert-message {$flash->type}">{$flash->message}</div>
+
+				{include #content}
 			</div>
 		</div>
 
