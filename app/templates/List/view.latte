@@ -11,7 +11,7 @@
 
 {if $list}
 {var $prev = NULL}
-<table class="list">
+<table class="list table">
   <tr n:foreach="$substitutions as $s">
     <td class="teacher" n:inner-if="$s->absention !== $prev">{$s->absention->teacher->surname}</td>
     <td class="hour">{$s->hour}</td>
