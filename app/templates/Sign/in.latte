@@ -3,42 +3,39 @@
 {block #content}
 
 {form signInForm}
-<fieldset>
-  <legend>Prihlásiť sa</legend>
+<fieldset class="form-horizontal">
+  <legend>prihlásiť sa</legend>
 
-  <div class="alert-message error" n:foreach="$form->errors as $error">
+  <div class="alert alert-error" n:foreach="$form->errors as $error">
     {$error}
   </div>
 
-  <div class="clearfix">
+  <div class="control-group">
     {label username /}
-    <div class="input">
+    <div class="controls">
       {input username}
+      <p class="help-block">použite svoje prihlasovacie údaje zo školských počítačov</p>
     </div>
   </div>
 
-  <div class="clearfix">
+  <div class="control-group">
     {label password /}
-    <div class="input">
+    <div class="controls">
       {input password}
     </div>
   </div>
 
-  <div class="clearfix">
-    <div class="input">
-      <ul class="inputs-list">
-        <li>
-          {label remember}
-          {input remember}
-          Zapamätať si ma
-          {/label}
-        </li>
-      </ul>
+  <div class="control-group">
+    <div class="controls">
+      {label remember, class => "checkbox"}
+        {input remember}
+        zapamätať si ma
+      {/label}
     </div>
   </div>
 
-  <div class="actions">
-    {input send class => "btn primary"}
+  <div class="form-actions">
+    {input send class => "btn btn-primary"}
   </div>
 </fieldset>
 {/form}
