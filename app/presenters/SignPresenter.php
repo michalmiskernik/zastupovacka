@@ -10,15 +10,15 @@ class SignPresenter extends BasePresenter
 	protected function createComponentSignInForm()
 	{
 		$form = new UI\Form;
-		$form->addText('username', 'Meno:')
-			->setRequired('Prosím zadaj meno.');
+		$form->addText('username', 'meno:')
+			->setRequired('prosím zadaj meno');
 
-		$form->addPassword('password', 'Heslo:')
-			->setRequired('Prosím zadaj heslo.');
+		$form->addPassword('password', 'heslo:')
+			->setRequired('prosím zadaj heslo');
 
 		$form->addCheckbox('remember');
 
-		$form->addSubmit('send', 'Prihlásiť');
+		$form->addSubmit('send', 'prihlásiť');
 
 		$form->onSuccess[] = callback($this, 'signInFormSubmitted');
 		return $form;
@@ -44,7 +44,7 @@ class SignPresenter extends BasePresenter
 	public function actionOut()
 	{
 		$this->getUser()->logout();
-		$this->flashMessage('Bol si odhlásený.', 'success');
+		$this->flashMessage('bol si odhlásený', 'success');
 		$this->redirect('in');
 	}
 

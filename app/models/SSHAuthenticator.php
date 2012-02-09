@@ -28,7 +28,7 @@ class SSHAuthenticator extends Nette\Object implements NS\IAuthenticator
       return $identity;
     }
 
-    throw new NS\AuthenticationException("Zlé meno alebo heslo", self::INVALID_CREDENTIAL);
+    throw new NS\AuthenticationException("zlé meno alebo heslo", self::INVALID_CREDENTIAL);
   }
 
   protected function connect()
@@ -60,7 +60,7 @@ class SSHAuthenticator extends Nette\Object implements NS\IAuthenticator
       return new NS\Identity($username, $this->getGroups(), $teacher->toArray());
     }
 
-    throw new NS\AuthenticationException("Používateľ nenájdený", self::IDENTITY_NOT_FOUND);
+    throw new NS\AuthenticationException("používateľ nenájdený", self::IDENTITY_NOT_FOUND);
   }
 
   protected function logout()
