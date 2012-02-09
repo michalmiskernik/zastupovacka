@@ -51,14 +51,14 @@ class AbsentionPresenter extends BasePresenter
   {
     $form = new UI\Form;
 
-    $form->addText('date', 'Dátum')
-      ->setRequired('Prosím zadaj dátum.');
+    $form->addText('date', 'dátum')
+      ->setRequired('prosím zadaj dátum.');
 
     for ($i = 0; $i <= 8; $i++) {
       $form->addCheckbox('hour_' . $i);
     }
 
-    $form->addSubmit('send', 'Nahlásiť');
+    $form->addSubmit('send', 'nahlásiť');
 
     $form->onSuccess[] = callback($this, 'processReportForm');
 

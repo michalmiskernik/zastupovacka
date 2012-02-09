@@ -3,32 +3,28 @@
 {block #content}
 
 {form reportForm}
-<fieldset>
-  <legend>Nahlásiť chýbanie</legend>
+<fieldset class="form form-horizontal">
+  <legend>nahlásiť chýbanie</legend>
 
-  <div class="clearfix">
+  <div class="control-group">
     {label date /}
-    <div class="input">
+    <div class="controls">
       {input date}
     </div>
   </div>
 
-  <div class="clearfix">
-    <label>Hodiny</label>
-    <div class="input">
-      <ul class="inputs-list">
-        <li n:for="$i = 0; $i <= 8; $i++">
-          <label>
-            {input hour_$i}
-            {$i}. hodina
-          </label>
-        </li>
-      </ul>
+  <div class="control-group">
+    <label>hodiny</label>
+    <div class="controls">
+      <label class="checkbox" n:for="$i = 0; $i <= 8; $i++">
+        {input hour_$i}
+        {$i}. hodina
+      </label>
     </div>
   </div>
 
-  <div class="actions">
-    {input send class => "btn primary"}
+  <div class="form-actions">
+    {input send class => "btn btn-primary"}
   </div>
 </fieldset>
 {/form}

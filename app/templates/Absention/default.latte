@@ -1,11 +1,19 @@
 {block #title}Moje absencie{/block}
 
 {block #content}
-<h1>Moje absencie</h1>
+<h1>moje absencie</h1>
 
-<table>
-  <tr n:foreach="$absentions as $absention">
-    <td>{$absention->date->format('d. n. Y')}</td>
-    <td>{$presenter->resolveHours($absention->hours)|implode:', '}</td>
-  </tr>
+<table class="table absentions">
+  <thead>
+    <tr>
+      <th>dátum</th>
+      <th>hodiny</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr n:foreach="$absentions as $absention">
+      <td>{$absention->date->format('j. n. Y')}</td>
+      <td>{$presenter->resolveHours($absention->hours)|implode:', '}</td>
+    </tr>
+  </tbody>
 </table>
