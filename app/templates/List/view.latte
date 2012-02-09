@@ -8,14 +8,25 @@
 {if $list}
 {var $prev = NULL}
 <table class="list table">
-  <tr n:foreach="$substitutions as $s">
-    <td class="teacher" n:inner-if="$s->absention !== $prev">{$s->absention->teacher->surname}</td>
-    <td class="hour">{$s->hour}</td>
-    <td class="class">{$s->class->name}</td>
-    <td class="subject">{$s->subject->abbr}</td>
-    <td class="substitute">{$s->substitute->surname}</td>
-    {var $prev = $s->absention}
-  </tr>
+  <thead>
+    <tr>
+      <th>chýbajúci</th>
+      <th>hodina</th>
+      <th>trieda</th>
+      <th>predmet</th>
+      <th>zastupujúci</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr n:foreach="$substitutions as $s">
+      <td class="teacher" n:inner-if="$s->absention !== $prev">{$s->absention->teacher->surname}</td>
+      <td class="hour">{$s->hour}</td>
+      <td class="class">{$s->class->name}</td>
+      <td class="subject">{$s->subject->abbr}</td>
+      <td class="substitute">{$s->substitute->surname}</td>
+      {var $prev = $s->absention}
+    </tr>
+  </tbody>
 </table>
 {else}
 <p>Na tento deň zastupovačka ešte neexistuje.</p>
