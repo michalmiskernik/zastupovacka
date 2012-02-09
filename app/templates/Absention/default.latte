@@ -16,4 +16,9 @@
       <td>{$presenter->resolveHours($absention->hours)|implode:', '}</td>
     </tr>
   </tbody>
+  <tfoot n:if="empty($absentions)">
+    <tr>
+      <td colspan="2">žiadne absencie</td>
+    </tr>
+  </tfoot>
 </table>
