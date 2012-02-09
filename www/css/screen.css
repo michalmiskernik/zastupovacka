@@ -25,13 +25,8 @@ table.list .substitute {
 	width: 35%;
 }
 
-#ajax-spinner {
-	margin: 15px 0 0 15px;
-	padding: 13px;
-	background: white url('../images/spinner.gif') no-repeat 50% 50%;
-	font-size: 0;
-	z-index: 123456;
-	display: none;
+#sidebar li {
+	line-height: 30px;
 }
 
 a[href^="error:"] {
