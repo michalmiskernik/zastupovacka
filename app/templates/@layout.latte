@@ -50,24 +50,30 @@
 				<ul class="nav nav-list">
 					{if $user->loggedIn}
 					<li class="nav-header">absencie</li>
-					<li n:ifAllowed="report absention">
+					<li n:class="$presenter->isLinkCurrent('Absention:report') ? active" n:ifAllowed="report absention">
 						<a n:href="Absention:report">nahlásiť absenciu</a>
 					</li>
-					<li n:ifAllowed="viewMine absention">
+					<li n:class="$presenter->isLinkCurrent('Absention:default') ? active" n:ifAllowed="viewMine absention">
 						<a n:href="Absention:default">moje absencie</a>
 					</li>
 					{/if}
 
 					<li class="nav-header">zastupovačky</li>
-					<li n:ifAllowed="create list">
+					<li n:class="$presenter->isLinkCurrent('List:create') ? active" n:ifAllowed="create list">
 						<a n:href="List:create">vytvoriť novú</a>
 					</li>
-					<li><a n:href="List:view today">dnes</a></li>
-					<li><a n:href="List:view tomorrow">zajtra</a></li>
-					<li n:foreach="$__lists as $list">
+					<li n:class="$presenter->isLinkCurrent('List:view', array('date' => 'today')) ? active">
+						<a n:href="List:view today">dnes</a>
+					</li>
+					<li n:class="$presenter->isLinkCurrent('List:view', array('date' => 'tomorrow')) ? active">
+						<a n:href="List:view tomorrow">zajtra</a>
+					</li>
+					<li n:class="$presenter->isLinkCurrent('List:view', array('date' => $list->date->format('Y-m-d'))) ? active" n:foreach="$__lists as $list">
 						<a n:href="List:view $list->date->format('Y-m-d')">{$list->date->format('j. n.')}</a>
 					</li>
-					<li><a n:href="List:default">všetky</a></li>
+					<li n:class="$presenter->isLinkCurrent('List:default') ? active">
+						<a n:href="List:default">všetky</a>
+					</li>
 			</div>
 
 			<div class="span9" id="content">
