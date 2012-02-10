@@ -1,0 +1,20 @@
+{block #title}Nahlásiť chybu{/block}
+
+{block #content}
+<h1>nahlásiť chybu</h1>
+
+{form reportForm}
+	<fieldset class="form-horizontal">
+		<div class="control-group">
+			{label text /}
+			<div class="controls">
+				{input text, class => "input-xlarge", rows => 5}
+				<p class="help-block">napíšte čo ste robili, keď chyba nastala a čo sa ukázať malo a neukázalo</p>
+			</div>
+		</div>
+
+		<div class="form-actions">
+			{input send, class => "btn btn-primary"}
+		</div>
+	</fieldset>
+{/form}
