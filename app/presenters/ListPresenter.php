@@ -2,7 +2,7 @@
 
 class ListPresenter extends BasePresenter
 {
-  protected $date, $list, $substitutions;
+  protected $date, $list;
 
   public function renderDefault()
   {
@@ -12,51 +12,47 @@ class ListPresenter extends BasePresenter
   public function renderView($date = 'today')
   {
     $date = new \DateTime($date);
-    $this->loadList($date);
+    $list = $this->table('lists')->where('date', $date)->fetch();
+
+    if ($list) {
+      $substitutions = $list->related('substitutions')->order('absention_id');
+      $this->template->substitutions = $substitutions;
+    }
+    
+    $this->template->list = $list;
+    $this->template->date = $date;
+  }
+
+  public function actionEdit($date)
+  {
+    $date = new \DateTime($date);
+    $storage = $this->context->listStorage;
+
+    $list = $storage->getList();
+    if (!$list || $list->date != $date) {
+      $row = $this->table('lists')->where('date', $date)->fetch();
+      $storage->setList($row);
+    }
+
+    $form = $this['listEditForm'];
+    $form->createControls($storage->getList());
   }
 
   /** @permission(list, edit) */
   public function renderEdit($date)
   {
-    $date = new \DateTime($date);
-    $this->loadList($date);
-
-    if (!$this->list) return;
-
-    $this->template->substitutions = $this->getListFromSession()->substitutions;
+    $list = $this->context->listStorage->getList();
+    $this->template->list = $list;
+    
+    $this->template->form = $this['listEditForm'];
   }
 
-  protected function loadList(\DateTime $date)
-  {
-    $this->template->date = $this->date = $date;
-    $list = $this->table('lists')->where('date', $date)->fetch();
-    $this->template->list = $this->list = $list;
-
-    if (!$list) return;
-
-    $this->template->substitutions = $this->substitutions = $list
-      ->related('substitutions')->order('absention_id');
+  public function save() {
+    $this->context->listStorage->save();
+    $this->redirect('this');
   }
 
-  protected function getListFromSession()
-  {
-    $name = 'list-' . $this->date->format('Y-m-d');
-    $session = $this->context->session;
-
-    if (!$session->hasSection($name)) {
-      $section = $session->getSection($name);
-      $section->setExpiration(0); // until the browser is closed
-      $section->date = $this->list->date;
-      $section->substitutions = $this->getArrayFromList($this->list);
-    }
-
-    return $session->getSection($name);
-  }
-
-  private function getArrayFromList($list)
-  {
-    return array_map(function ($s) {
-      return $s->toArray();
-    }, iterator_to_array($list->related('substitutions')));
+  protected function createComponentListEditForm() {
+    return new ListEditForm;
   }
 }

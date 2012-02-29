@@ -1,5 +1,38 @@
-{block #title}Upraviť | {$date->format('d. n.')}{/block}
+{block #title}Upraviť | {$list->date->format('j. n.')}{/block}
 
 {block #content}
 
-<h1>Upraviť zastupovačku</h1>
+<h1>upraviť zastupovačku</h1>
+
+{include @tabs.latte, date => $list->date}
+
+{dump $form->submitted}
+
+{form listEditForm}
+<div class="fake-hidden">{input save}</div>
+
+<table class="list table edit">
+  {foreach $form->getComponents(FALSE, 'Nette\Forms\Container') as $a}
+  <tr n:foreach="$a->getComponents(FALSE, 'Nette\Forms\Container') as $s">
+    <td class="teacher">{first}{$a['teacher']->control}{/first}</td>
+    <td class="hour">{$s['hour']->control}</td>
+    <td class="class">{$s['class']->control}</td>
+    <td class="subject">{$s['subject']->control}</td>
+    <td class="substitute">{$s['substitute']->control}</td>
+  </tr>
+  <tr>
+    <td class="teacher"></td>
+    <td colspan="4" class="add">{$a['add']->control->addClass('btn')}</td>
+  </tr>
+  {/foreach}
+  <tr>
+    <td colspan="5" class="add">
+      {input add, class => "btn"}
+    </td>
+  </tr>
+</table>
+
+<div class="form-actions">
+  {input save, class => "btn btn-primary"}
+</div>
+{/form}
