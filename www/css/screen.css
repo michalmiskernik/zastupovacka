@@ -48,6 +48,10 @@ table.list.edit td.add input {
   overflow: hidden;
 }
 
+.brand .version {
+  color: #999;
+}
+
 a[href^="error:"] {
 	background: red;
 	color: white;
