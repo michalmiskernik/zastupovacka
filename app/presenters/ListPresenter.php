@@ -27,28 +27,18 @@ class ListPresenter extends BasePresenter
   {
     $date = new \DateTime($date);
     $form = $this['listForm'];
+    $absentions = $this->context->listModel->load($date);
+
+    $form['save']->onClick[] = callback($this, 'processListEditForm');
 
     if (!$form->isSubmitted()) {
-      $list = $this->table('lists')->where('date', $date)->fetch();
-      $asts = $form['absentions'];
-      $prev = NULL;
+      foreach ($absentions as $id => $absention) {
+        $container = $form['absentions'][$id];
+        $container->setValues($absention);
 
-      foreach ($list->related('substitutions') as $sbt) {
-        if ($sbt->absention_id !== $prev) {
-          $ast = $sbt->absention;
-          $asts[$ast->id]['teacher']->setValue($ast->teacher->surname);
+        foreach ($absention->substitutions as $id => $substitution) {
+          $container['substitutions'][$id]->setValues($substitution);
         }
-
-        $sbts = $asts[$sbt->absention_id]['substitutions'];
-
-        $sbts[$sbt->id]->setValues(array(
-          "hour" => $sbt->hour,
-          "class" => $sbt->class->name,
-          "subject" => $sbt->subject->abbr,
-          "substitute" => $sbt->substitute->surname,
-        ));
-
-        $prev = $sbt->absention_id;
       }
     }
   }
@@ -59,9 +49,10 @@ class ListPresenter extends BasePresenter
     $this->template->date = new \DateTime($date);
   }
 
-  public function save() {
-    $this->context->listStorage->save();
-    $this->redirect('this');
+  public function processListEditForm($button)
+  {
+    $values = $button->form->getValues();
+    dump($values->absentions);
   }
 
   protected function createComponentListForm() {

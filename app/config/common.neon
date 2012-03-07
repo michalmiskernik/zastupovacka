@@ -29,3 +29,6 @@ services:
   
   authorizator:
     class: ACL
+
+  listModel:
+    class: ListModel(@database::table('lists'))
