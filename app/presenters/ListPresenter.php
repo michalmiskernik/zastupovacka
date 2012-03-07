@@ -26,16 +26,31 @@ class ListPresenter extends BasePresenter
   public function actionEdit($date)
   {
     $date = new \DateTime($date);
-    $storage = $this->context->listStorage;
+    $form = $this['listForm'];
 
-    $list = $storage->getList();
-    if (!$list || $list->date != $date) {
-      $row = $this->table('lists')->where('date', $date)->fetch();
-      $storage->setList($row);
+    if (!$form->isSubmitted()) {
+      $list = $this->table('lists')->where('date', $date)->fetch();
+      $asts = $form['absentions'];
+      $prev = NULL;
+
+      foreach ($list->related('substitutions') as $sbt) {
+        if ($sbt->absention_id !== $prev) {
+          $ast = $sbt->absention;
+          $asts[$ast->id]['teacher']->setValue($ast->teacher->surname);
+        }
+
+        $sbts = $asts[$sbt->absention_id]['substitutions'];
+
+        $sbts[$sbt->id]->setValues(array(
+          "hour" => $sbt->hour,
+          "class" => $sbt->class->name,
+          "subject" => $sbt->subject->abbr,
+          "substitute" => $sbt->substitute->surname,
+        ));
+
+        $prev = $sbt->absention_id;
+      }
     }
-
-    $form = $this['listEditForm'];
-    $form->createControls($storage->getList());
   }
 
   /** @permission(list, edit) */
@@ -43,8 +58,6 @@ class ListPresenter extends BasePresenter
   {
     $list = $this->context->listStorage->getList();
     $this->template->list = $list;
-    
-    $this->template->form = $this['listEditForm'];
   }
 
   public function save() {
@@ -52,7 +65,7 @@ class ListPresenter extends BasePresenter
     $this->redirect('this');
   }
 
-  protected function createComponentListEditForm() {
-    return new ListEditForm;
+  protected function createComponentListForm() {
+    return new ListForm;
   }
 }

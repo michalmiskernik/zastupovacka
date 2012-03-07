@@ -29,7 +29,3 @@ services:
   
   authorizator:
     class: ACL
-  
-  listStorage:
-    class: ListStorage
-    arguments: [@session::getSection('list')]

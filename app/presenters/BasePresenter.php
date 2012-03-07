@@ -38,6 +38,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
   {
     parent::startup();
 
+    Kdyby\Forms\Containers\Replicator::register();
+
     $reflection = $this->reflection;
     try {
       $name = $this->formatActionMethod($this->action);

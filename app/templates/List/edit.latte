@@ -6,30 +6,34 @@
 
 {include @tabs.latte, date => $list->date}
 
-{dump $form->submitted}
-
-{form listEditForm}
+{form listForm}
 <div class="fake-hidden">{input save}</div>
 
 <table class="list table edit">
-  {foreach $form->getComponents(FALSE, 'Nette\Forms\Container') as $a}
-  <tr n:foreach="$a->getComponents(FALSE, 'Nette\Forms\Container') as $s">
-    <td class="teacher">{first}{$a['teacher']->control}{/first}</td>
-    <td class="hour">{$s['hour']->control}</td>
-    <td class="class">{$s['class']->control}</td>
-    <td class="subject">{$s['subject']->control}</td>
-    <td class="substitute">{$s['substitute']->control}</td>
+
+  {foreach $form['absentions']->getContainers() as $aid => $absention}
+
+  <tr n:foreach="$absention['substitutions']->getContainers() as $sid => $substitution">
+    <td class="teacher" n:inner-first>{input absentions-$aid-teacher}</td>
+    <td class="hour">{input absentions-$aid-substitutions-$sid-hour}</td>
+    <td class="class">{input absentions-$aid-substitutions-$sid-class}</td>
+    <td class="subject">{input absentions-$aid-substitutions-$sid-subject}</td>
+    <td class="substitute">{input absentions-$aid-substitutions-$sid-substitute}</td>
   </tr>
+
   <tr>
     <td class="teacher"></td>
-    <td colspan="4" class="add">{$a['add']->control->addClass('btn')}</td>
+    <td colspan="4" class="add">{input absentions-$aid-substitutions-add, class => "btn"}</td>
   </tr>
+
   {/foreach}
+
   <tr>
     <td colspan="5" class="add">
-      {input add, class => "btn"}
+      {input absentions-add, class => "btn"}
     </td>
   </tr>
+
 </table>
 
 <div class="form-actions">
