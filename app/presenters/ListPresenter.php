@@ -56,8 +56,7 @@ class ListPresenter extends BasePresenter
   /** @permission(list, edit) */
   public function renderEdit($date)
   {
-    $list = $this->context->listStorage->getList();
-    $this->template->list = $list;
+    $this->template->date = new \DateTime($date);
   }
 
   public function save() {

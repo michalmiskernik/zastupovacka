@@ -1,10 +1,10 @@
-{block #title}Upraviť | {$list->date->format('j. n.')}{/block}
+{block #title}Upraviť | {$date->format('j. n.')}{/block}
 
 {block #content}
 
 <h1>upraviť zastupovačku</h1>
 
-{include @tabs.latte, date => $list->date}
+{include @tabs.latte, date => $date}
 
 {form listForm}
 <div class="fake-hidden">{input save}</div>
