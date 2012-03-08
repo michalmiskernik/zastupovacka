@@ -12,12 +12,7 @@ class ListPresenter extends BasePresenter
   public function renderView($date = 'today')
   {
     $date = new \DateTime($date);
-    $list = $this->table('lists')->where('date', $date)->fetch();
-
-    if ($list) {
-      $substitutions = $list->related('substitutions')->order('absention_id');
-      $this->template->substitutions = $substitutions;
-    }
+    $list = $this->context->listModel->load($date);
     
     $this->template->list = $list;
     $this->template->date = $date;

@@ -6,7 +6,6 @@
 {include @tabs.latte}
 
 {if $list}
-{var $prev = NULL}
 <table class="list table">
   <thead>
     <tr>
@@ -18,14 +17,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr n:foreach="$substitutions as $s">
-      <td class="teacher" n:inner-if="$s->absention !== $prev">{$s->absention->teacher->surname}</td>
+    {foreach $list as $absention}
+    <tr n:foreach="$absention->substitutions as $s">
+      <td class="teacher" n:inner-first>{$absention->teacher}</td>
       <td class="hour">{$s->hour}</td>
-      <td class="class">{$s->class->name}</td>
-      <td class="subject">{$s->subject->abbr}</td>
-      <td class="substitute">{$s->substitute->surname}</td>
-      {var $prev = $s->absention}
+      <td class="class">{$s->class}</td>
+      <td class="subject">{$s->subject}</td>
+      <td class="substitute">{$s->substitute}</td>
     </tr>
+    {/foreach}
   </tbody>
 </table>
 {else}
