@@ -22,11 +22,12 @@ class ListPresenter extends BasePresenter
   {
     $date = new \DateTime($date);
     $form = $this['listForm'];
-    $absentions = $this->context->listModel->load($date);
 
     $form['save']->onClick[] = callback($this, 'processListEditForm');
 
     if (!$form->isSubmitted()) {
+      $absentions = $this->context->listModel->load($date);
+      
       foreach ($absentions as $id => $absention) {
         $container = $form['absentions'][$id];
         $container->setValues($absention);
