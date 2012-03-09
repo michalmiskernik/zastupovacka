@@ -1,10 +1,8 @@
-{block #title}Nahlásiť chýbanie{/block}
-
 {block #content}
 
 {form reportForm}
 <fieldset class="form form-horizontal">
-  <legend>nahlásiť chýbanie</legend>
+  <legend n:inner-block="title">nahlásiť absenciu</legend>
 
   <div class="control-group">
     {label date /}
@@ -14,11 +12,11 @@
   </div>
 
   <div class="control-group">
-    <label>hodiny</label>
+    <label class="control-label">hodiny</label>
     <div class="controls">
-      <label class="checkbox" n:for="$i = 0; $i <= 8; $i++">
+      <label class="checkbox inline" n:for="$i = 0; $i <= 8; $i++">
         {input hour_$i}
-        {$i}. hodina
+        {$i}.
       </label>
     </div>
   </div>
