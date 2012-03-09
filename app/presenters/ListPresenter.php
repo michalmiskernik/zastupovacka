@@ -48,8 +48,10 @@ class ListPresenter extends BasePresenter
   public function processListEditForm($button)
   {
     $values = $button->form->getValues();
-    $date = new \DateTime($this->request->parameters['date']);
+    $rawDate = $this->request->parameters['date'];
+    $date = new \DateTime($rawDate);
     $this->context->listModel->save($date, $values->absentions);
+    $this->redirect('view', $rawDate);
   }
 
   protected function createComponentListForm() {
