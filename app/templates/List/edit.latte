@@ -9,6 +9,8 @@
 {form listForm}
 <div class="fake-hidden">{input save}</div>
 
+{control $form errors}
+
 <table class="list table edit">
 
   {foreach $form['absentions']->getContainers() as $aid => $absention}

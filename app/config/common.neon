@@ -29,4 +29,15 @@ services:
     class: ACL
 
   listModel:
-    class: ListModel(@database::table('lists'))
+    class: ListModel
+
+  namesTranslator:
+    class: NamesTranslator
+
+factories:
+  listForm:
+    class: ListForm
+
+  nameInput:
+    parameters: [group]
+    class: NameInput(%group%, ...)
