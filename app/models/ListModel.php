@@ -24,7 +24,7 @@ class ListModel extends Nette\Object
 
 		$absentions = array();
 
-		foreach ($list->related('substitutions') as $sbt) {
+		foreach ($list->related('substitutions')->order('hour') as $sbt) {
 
 			if (!isset($absentions[$sbt->absention_id])) {
 				$absentions[$sbt->absention_id] = ArrayHash::from(array(
