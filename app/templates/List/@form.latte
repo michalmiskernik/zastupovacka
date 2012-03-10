@@ -22,27 +22,31 @@
         <input n:input="absentions-$aid-teacher"
           n:class="$absention['teacher']->errors ? error"
           n:attr="title => implode($absention['teacher']->errors, ', ') ?: NULL">
+        <input n:input="absentions-$aid-remove" value="&times;" class="btn remove">
       </td>
+      {formContainer absentions-$aid-substitutions-$sid}
       <td class="hour">
-        <input n:input="absentions-$aid-substitutions-$sid-hour"
+        <input n:input="hour"
           n:class="$substitution['hour']->errors ? error"
           n:attr="title => implode($substitution['hour']->errors, ', ') ?: NULL">
       </td>
       <td class="class">
-        <input n:input="absentions-$aid-substitutions-$sid-class"
+        <input n:input="class"
           n:class="$substitution['class']->hasErrors() ? error"
           n:attr="title => implode($substitution['class']->errors, ', ') ?: NULL">
       </td>
       <td class="subject">
-        <input n:input="absentions-$aid-substitutions-$sid-subject"
+        <input n:input="subject"
           n:class="$substitution['subject']->hasErrors() ? error"
           n:attr="title => implode($substitution['subject']->errors, ', ') ?: NULL">
       </td>
       <td class="substitute">
-        <input n:input="absentions-$aid-substitutions-$sid-substitute"
+        <input n:input="substitute"
           n:class="$substitution['substitute']->hasErrors() ? error"
           n:attr="title => implode($substitution['substitute']->errors, ', ') ?: NULL">
+        <input n:input="remove" value="&times;" class="btn remove">
       </td>
+      {/formContainer}
     </tr>
 
     <tr>

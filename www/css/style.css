@@ -26,7 +26,9 @@ table.list .substitute {
 }
 
 table.list.edit input {
-  width: 97%;
+  width: 100%;
+  height: 28px;
+  box-sizing: border-box;
   margin: 0;
 }
 
@@ -38,9 +40,25 @@ table.list.edit td.add input {
   width: auto;
 }
 
-table.list input.error {
+table.list.edit input.error {
   border-color: #B94A48;
   color: #B94A48;
+}
+
+table.list.edit td.teacher,
+table.list.edit td.substitute {
+  padding-right: 48px;
+  position: relative;
+}
+
+table.list.edit input.remove {
+  width: 35px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #777;
+  position: absolute;
+  right: 5px;
+  top: 8px;
 }
 
 table.list input.error:focus {

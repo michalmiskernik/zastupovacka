@@ -17,6 +17,7 @@ class ListForm extends UI\Form
 		$this->addSubmit('save', 'uložiť');
 
 		$this->addDynamic('absentions', function ($container) use ($form) {
+
 			$form->addName($container, 'teacher', 'teachers')
 				->setRequired()
 				->addRule(':exists', 'učiteľ neexistuje');
@@ -38,9 +39,20 @@ class ListForm extends UI\Form
 					->setRequired()
 					->addRule(':exists', 'učiteľ neexistuje');
 
+				$container->addSubmit('remove')->setValidationScope(NULL)->onClick[] = function ($button) {
+					$container = $button->parent;
+					$container->parent->remove($container, TRUE);
+				};
+
 			})->addSubmit('add', 'pridať')->setValidationScope(NULL)->onClick[] = function ($button) {
 				$button->parent->createOne();
 			};
+
+			$container->addSubmit('remove')->setValidationScope(NULL)->onClick[] = function ($button) {
+				$container = $button->parent;
+				$container->parent->remove($container, TRUE);
+			};
+
 		})->addSubmit('add', 'pridať')->setValidationScope(NULL)->onClick[] = function ($button) {
 			$container = $button->parent->createOne();
 			$container['substitutions']->createOne();
