@@ -51,14 +51,16 @@
 
     <tr>
       <td class="teacher"></td>
-      <td colspan="4" class="add">{input absentions-$aid-substitutions-add, class => "btn"}</td>
+      <td colspan="4" class="add">
+        <input n:input="absentions-$aid-substitutions-add" value="&plus;" class="btn">
+      </td>
     </tr>
 
     {/foreach}
 
     <tr>
       <td colspan="5" class="add">
-        {input absentions-add, class => "btn"}
+        <input n:input="absentions-add" value="&plus;" class="btn">
       </td>
     </tr>
 

@@ -44,7 +44,7 @@ class ListForm extends UI\Form
 					$container->parent->remove($container, TRUE);
 				};
 
-			})->addSubmit('add', 'pridať')->setValidationScope(NULL)->onClick[] = function ($button) {
+			})->addSubmit('add')->setValidationScope(NULL)->onClick[] = function ($button) {
 				$button->parent->createOne();
 			};
 
@@ -53,7 +53,7 @@ class ListForm extends UI\Form
 				$container->parent->remove($container, TRUE);
 			};
 
-		})->addSubmit('add', 'pridať')->setValidationScope(NULL)->onClick[] = function ($button) {
+		})->addSubmit('add')->setValidationScope(NULL)->onClick[] = function ($button) {
 			$container = $button->parent->createOne();
 			$container['substitutions']->createOne();
 		};

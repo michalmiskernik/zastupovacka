@@ -48,6 +48,9 @@ table.list.edit td.add {
 
 table.list.edit td.add input {
   width: auto;
+  font-size: 20px;
+  font-weight: bold;
+  color: #777;
 }
 
 table.list.edit input.error {
