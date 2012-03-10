@@ -18,12 +18,13 @@ class ListPresenter extends BasePresenter
     $this->template->date = $date;
   }
 
+  /** @permission(list, edit) */
   public function actionEdit($date)
   {
     $date = new \DateTime($date);
     $form = $this['listForm'];
 
-    $form['save']->onClick[] = callback($this, 'processListEditForm');
+    $form['save']->onClick[] = callback($this, 'processListForm');
 
     if (!$form->isSubmitted()) {
       $absentions = $this->context->listModel->load($date);
@@ -38,14 +39,30 @@ class ListPresenter extends BasePresenter
       }
     }
   }
-
-  /** @permission(list, edit) */
   public function renderEdit($date)
   {
     $this->template->date = new \DateTime($date);
   }
 
-  public function processListEditForm($button)
+  /** @permission(list, create) */
+  public function actionCreate($date)
+  {
+    $date = new \DateTime($date);
+    $form = $this['listForm'];
+
+    $form['save']->onClick[] = callback($this, 'processListForm');
+
+    if (!$form->isSubmitted()) {
+      $form['absentions']->createOne()->getComponent('substitutions')->createOne();
+    }
+  }
+
+  public function renderCreate($date)
+  {
+    $this->template->date = new \DateTime($date);
+  }
+
+  public function processListForm($button)
   {
     $values = $button->form->getValues();
     $rawDate = $this->request->parameters['date'];

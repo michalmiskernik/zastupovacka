@@ -84,6 +84,18 @@ class ListModel extends Nette\Object
 		$list = $this->db->table('lists')->insert(array(
 			"date" => $date
 		));
+
+		$this->assignAbsentionIds($list, $absentions);
+
+		$this->db->beginTransaction();
+
+		try {
+			$this->createAbsentions($list, $absentions);
+			$this->createSubstitutions($list, $absentions);
+			$this->db->commit();
+		} catch (PDOException $e) {
+			$this->db->rollBack();
+		}
 	}
 
 	private function assignAbsentionIds($list, $absentions)

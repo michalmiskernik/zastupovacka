@@ -1,18 +1,16 @@
-{block #title}Upraviť | {$date->format('j. n.')}{/block}
+{block #title}vytvoriť | {$date->format('j. n.')}{/block}
 
 {block #content}
 
-<h1>upraviť zastupovačku</h1>
+<h1>vytvoriť zastupovačku</h1>
 
 <ul class="nav nav-tabs" n:ifAllowed="edit list">
   <li>
     <a n:href="view $date->format('Y-m-d')">zobraziť</a>
   </li>
   <li class="active">
-    <a n:href="edit $date->format('Y-m-d')">upraviť</a>
+    <a n:href="create $date->format('Y-m-d')">vytvoriť</a>
   </li>
 </ul>
 
 {include @form.latte}
-
-

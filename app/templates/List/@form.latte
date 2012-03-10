@@ -1,0 +1,34 @@
+{form listForm}
+<div class="fake-hidden">{input save}</div>
+
+<table class="list table edit">
+
+  {foreach $form['absentions']->getContainers() as $aid => $absention}
+
+  <tr n:foreach="$absention['substitutions']->getContainers() as $sid => $substitution">
+    <td class="teacher" n:inner-first>{input absentions-$aid-teacher}</td>
+    <td class="hour">{input absentions-$aid-substitutions-$sid-hour}</td>
+    <td class="class">{input absentions-$aid-substitutions-$sid-class}</td>
+    <td class="subject">{input absentions-$aid-substitutions-$sid-subject}</td>
+    <td class="substitute">{input absentions-$aid-substitutions-$sid-substitute}</td>
+  </tr>
+
+  <tr>
+    <td class="teacher"></td>
+    <td colspan="4" class="add">{input absentions-$aid-substitutions-add, class => "btn"}</td>
+  </tr>
+
+  {/foreach}
+
+  <tr>
+    <td colspan="5" class="add">
+      {input absentions-add, class => "btn"}
+    </td>
+  </tr>
+
+</table>
+
+<div class="form-actions">
+  {input save, class => "btn btn-primary"}
+</div>
+{/form}

@@ -3,7 +3,20 @@
 {block #content}
 <h1>{$date->format('j. n. Y')}</h1>
 
-{include @tabs.latte}
+<ul class="nav nav-tabs" n:ifAllowed="edit list">
+  <li class="active">
+    <a n:href="view $date->format('Y-m-d')">zobraziť</a>
+  </li>
+  <li n:if="$list">
+    <a n:href="edit $date->format('Y-m-d')">upraviť</a>
+  </li>
+  <li n:if="!$list">
+    <a n:href="create $date->format('Y-m-d')">vytvoriť</a>
+  </li>
+  <li n:if="$list">
+    <a href="javascript:window.print()">vytlačiť</a>
+  </li>
+</ul>
 
 {if $list}
 <table class="list table">
