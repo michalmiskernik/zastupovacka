@@ -38,6 +38,18 @@ table.list.edit td.add input {
   width: auto;
 }
 
+table.list input.error {
+  border-color: #B94A48;
+  color: #B94A48;
+}
+
+table.list input.error:focus {
+  border-color: #953b39;
+  -webkit-box-shadow: 0 0 6px #d59392;
+  -moz-box-shadow: 0 0 6px #d59392;
+  box-shadow: 0 0 6px #d59392;
+}
+
 #sidebar li {
 	line-height: 30px;
 }

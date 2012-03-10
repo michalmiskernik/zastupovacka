@@ -3,28 +3,62 @@
 
 <table class="list table edit">
 
-  {foreach $form['absentions']->getContainers() as $aid => $absention}
+  <thead>
+    <tr>
+      <th>chýbajúci</th>
+      <th>hodina</th>
+      <th>trieda</th>
+      <th>predmet</th>
+      <th>zastupujúci</th>
+    </tr>
+  </thead>
 
-  <tr n:foreach="$absention['substitutions']->getContainers() as $sid => $substitution">
-    <td class="teacher" n:inner-first>{input absentions-$aid-teacher}</td>
-    <td class="hour">{input absentions-$aid-substitutions-$sid-hour}</td>
-    <td class="class">{input absentions-$aid-substitutions-$sid-class}</td>
-    <td class="subject">{input absentions-$aid-substitutions-$sid-subject}</td>
-    <td class="substitute">{input absentions-$aid-substitutions-$sid-substitute}</td>
-  </tr>
+  <tbody>
 
-  <tr>
-    <td class="teacher"></td>
-    <td colspan="4" class="add">{input absentions-$aid-substitutions-add, class => "btn"}</td>
-  </tr>
+    {foreach $form['absentions']->getContainers() as $aid => $absention}
 
-  {/foreach}
+    <tr n:foreach="$absention['substitutions']->getContainers() as $sid => $substitution">
+      <td class="teacher" n:inner-first>
+        <input n:input="absentions-$aid-teacher"
+          n:class="$absention['teacher']->errors ? error"
+          n:attr="title => implode($absention['teacher']->errors, ', ') ?: NULL">
+      </td>
+      <td class="hour">
+        <input n:input="absentions-$aid-substitutions-$sid-hour"
+          n:class="$substitution['hour']->errors ? error"
+          n:attr="title => implode($substitution['hour']->errors, ', ') ?: NULL">
+      </td>
+      <td class="class">
+        <input n:input="absentions-$aid-substitutions-$sid-class"
+          n:class="$substitution['class']->hasErrors() ? error"
+          n:attr="title => implode($substitution['class']->errors, ', ') ?: NULL">
+      </td>
+      <td class="subject">
+        <input n:input="absentions-$aid-substitutions-$sid-subject"
+          n:class="$substitution['subject']->hasErrors() ? error"
+          n:attr="title => implode($substitution['subject']->errors, ', ') ?: NULL">
+      </td>
+      <td class="substitute">
+        <input n:input="absentions-$aid-substitutions-$sid-substitute"
+          n:class="$substitution['substitute']->hasErrors() ? error"
+          n:attr="title => implode($substitution['substitute']->errors, ', ') ?: NULL">
+      </td>
+    </tr>
 
-  <tr>
-    <td colspan="5" class="add">
-      {input absentions-add, class => "btn"}
-    </td>
-  </tr>
+    <tr>
+      <td class="teacher"></td>
+      <td colspan="4" class="add">{input absentions-$aid-substitutions-add, class => "btn"}</td>
+    </tr>
+
+    {/foreach}
+
+    <tr>
+      <td colspan="5" class="add">
+        {input absentions-add, class => "btn"}
+      </td>
+    </tr>
+
+  </tbody>
 
 </table>
 
