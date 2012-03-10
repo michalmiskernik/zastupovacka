@@ -17,6 +17,11 @@ class ListModel extends Nette\Object
 	public function load($date)
 	{
 		$list = $this->loadList($date);
+
+		if (!$list) {
+			return $list;
+		}
+
 		$absentions = array();
 
 		foreach ($list->related('substitutions') as $sbt) {
