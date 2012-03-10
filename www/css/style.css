@@ -14,10 +14,16 @@ h1 {
   margin-top: -19px;
 }
 
-table.list .class,
-table.list .hour,
+table.list .hour {
+  width: 8%;
+}
+
 table.list .subject {
 	width: 10%;
+}
+
+table.list .class {
+  width: 12%;
 }
 
 table.list .teacher,

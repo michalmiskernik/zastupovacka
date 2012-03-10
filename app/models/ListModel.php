@@ -35,7 +35,7 @@ class ListModel extends Nette\Object
 
 			$absentions[$sbt->absention_id]->substitutions[$sbt->id] = ArrayHash::from(array(
 				"hour" => $sbt->hour,
-				"class" => $sbt->class->name,
+				"class" => implode($this->getClasses($sbt), '/'),
 				"subject" => $sbt->subject->abbr,
 				"substitute" => $sbt->substitute->surname,
 			));
@@ -48,6 +48,18 @@ class ListModel extends Nette\Object
 	private function loadList($date)
 	{
 		return $this->db->table('lists')->where('date', $date)->fetch();
+	}
+
+	private function getClasses($substitution)
+	{
+		if ($substitution->class) {
+			return array($substitution->class->name);
+		} else {
+			$classes = $substitution->related('substitution_classes');
+			return array_map(function ($sc) {
+				return $sc->class->name;
+			}, iterator_to_array($classes));
+		}
 	}
 
 	/*** saving *****************************************************************/
@@ -76,6 +88,7 @@ class ListModel extends Nette\Object
 			$this->db->commit();
 		} catch (PDOException $e) {
 			$this->db->rollBack();
+			throw $e;
 		}
 	}
 
@@ -95,6 +108,7 @@ class ListModel extends Nette\Object
 			$this->db->commit();
 		} catch (PDOException $e) {
 			$this->db->rollBack();
+			throw $e;
 		}
 	}
 
@@ -156,21 +170,38 @@ class ListModel extends Nette\Object
 
 	private function createSubstitutions($list, $absentions)
 	{
-		$values = array();
+		$queue = new InsertQueue($this->db->table('substitutions'));
+		$scTable = $this->db->table('substitution_classes');
 
 		foreach ($absentions as $absention) {
 			foreach ($absention->substitutions as $substitution) {
-				$values[] = array(
+				$data = array(
 					"list_id" => $list->id,
 					"absention_id" => $absention->id,
 					"hour" => $substitution->hour,
-					"class_id" => $substitution->class,
+					"class_id" => is_array($substitution->class) ? NULL : $substitution->class,
 					"subject_id" => $substitution->subject,
 					"substitute_id" => $substitution->substitute
 				);
+
+				$insert = new Insert($data);
+
+				if (is_array($substitution->class)) {
+					$classIds = $substitution->class;
+					$insert->onDone[] = function ($row) use ($classIds, $scTable) {
+						foreach ($classIds as $id) {
+							$scTable->insert(array(
+								"substitution_id" => $row->id,
+								"class_id" => $id
+							));
+						}
+					};
+				}
+
+				$queue->add($insert);
 			}
 		}
 
-		$this->db->table('substitutions')->insert($values);
+		$queue->run();
 	}
 }
