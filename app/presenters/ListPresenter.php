@@ -42,13 +42,7 @@ class ListPresenter extends BasePresenter
   public function renderEdit($date)
   {
     $this->template->date = new \DateTime($date);
-
-    $translator = $this->context->namesTranslator;
-    $this->template->names = array(
-      "teachers" => $translator->getAll('teachers'),
-      "subjects" => $translator->getAll('subjects'),
-      "classes" => $translator->getAll('classes')
-    );
+    $this->addNamesToTemplate();
   }
 
   /** @permission(list, create) */
@@ -67,13 +61,7 @@ class ListPresenter extends BasePresenter
   public function renderCreate($date)
   {
     $this->template->date = new \DateTime($date);
-
-    $translator = $this->context->namesTranslator;
-    $this->template->names = array(
-      "teachers" => $translator->getAll('teachers'),
-      "subjects" => $translator->getAll('subjects'),
-      "classes" => $translator->getAll('classes')
-    );
+    $this->addNamesToTemplate();
   }
 
   public function processListForm($button)
@@ -87,5 +75,15 @@ class ListPresenter extends BasePresenter
 
   protected function createComponentListForm() {
     return $this->context->createListForm();
+  }
+
+  private function addNamesToTemplate()
+  {
+    $translator = $this->context->namesTranslator;
+    $this->template->names = array(
+      "teachers" => $translator->getAll('teachers'),
+      "subjects" => $translator->getAll('subjects'),
+      "classes" => $translator->getAll('classes')
+    );
   }
 }
