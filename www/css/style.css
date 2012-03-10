@@ -31,6 +31,10 @@ table.list .substitute {
 	width: 35%;
 }
 
+table.list tr.first td {
+  border-top-width: 2px;
+}
+
 table.list.edit input {
   width: 100%;
   height: 28px;

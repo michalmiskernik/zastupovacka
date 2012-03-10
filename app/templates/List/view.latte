@@ -31,7 +31,7 @@
   </thead>
   <tbody>
     {foreach $list as $absention}
-    <tr n:foreach="$absention->substitutions as $s">
+    <tr n:foreach="$absention->substitutions as $s" n:class="$iterator->first ? first">
       <td class="teacher" n:inner-first>{$absention->teacher}</td>
       <td class="hour">{$s->hour}</td>
       <td class="class">{$s->class}</td>
