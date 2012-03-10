@@ -3,7 +3,7 @@
 {block #content}
 <h1>{$date->format('j. n. Y')}</h1>
 
-<ul class="nav nav-tabs" n:ifAllowed="edit list">
+<ul class="nav nav-tabs list-tabs" n:ifAllowed="edit list">
   <li class="active">
     <a n:href="view $date->format('Y-m-d')">zobraziť</a>
   </li>

@@ -56,3 +56,13 @@ a[href^="error:"] {
 	background: red;
 	color: white;
 }
+
+@media print {
+  #navbar, #sidebar, .list-tabs {
+    display: none;
+  }
+
+  body {
+    padding: 0px;
+  }
+}
