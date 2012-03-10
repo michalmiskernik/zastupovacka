@@ -30,4 +30,9 @@ class NamesTranslator extends Nette\Object
 		
 		return NULL;
 	}
+
+	public function getAll($type)
+	{
+		return array_keys($this->names[$type]);
+	}
 }
