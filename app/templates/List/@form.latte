@@ -19,10 +19,12 @@
 
     <tr n:foreach="$absention['substitutions']->getContainers() as $sid => $substitution">
       <td class="teacher" n:inner-first>
-        <input n:input="absentions-$aid-teacher"
-          n:class="$absention['teacher']->errors ? error"
-          n:attr="title => implode($absention['teacher']->errors, ', ') ?: NULL">
-        <input n:input="absentions-$aid-remove" value="&times;" class="btn remove">
+        <div>
+          <input n:input="absentions-$aid-teacher"
+            n:class="$absention['teacher']->errors ? error"
+            n:attr="title => implode($absention['teacher']->errors, ', ') ?: NULL">
+          <input n:input="absentions-$aid-remove" value="×" class="btn remove">
+        </div>
       </td>
       {formContainer absentions-$aid-substitutions-$sid}
       <td class="hour">
@@ -41,10 +43,12 @@
           n:attr="title => implode($substitution['subject']->errors, ', ') ?: NULL">
       </td>
       <td class="substitute">
-        <input n:input="substitute"
-          n:class="$substitution['substitute']->hasErrors() ? error"
-          n:attr="title => implode($substitution['substitute']->errors, ', ') ?: NULL">
-        <input n:input="remove" value="&times;" class="btn remove">
+        <div>
+          <input n:input="substitute"
+                  n:class="$substitution['substitute']->hasErrors() ? error"
+                  n:attr="title => implode($substitution['substitute']->errors, ', ') ?: NULL">
+          <input n:input="remove" value="×" class="btn remove">
+        </div>
       </td>
       {/formContainer}
     </tr>
@@ -52,7 +56,7 @@
     <tr>
       <td class="teacher"></td>
       <td colspan="4" class="add">
-        <input n:input="absentions-$aid-substitutions-add" value="&plus;" class="btn">
+        <input n:input="absentions-$aid-substitutions-add" value="+" class="btn">
       </td>
     </tr>
 
@@ -60,7 +64,7 @@
 
     <tr>
       <td colspan="5" class="add">
-        <input n:input="absentions-add" value="&plus;" class="btn">
+        <input n:input="absentions-add" value="+" class="btn">
       </td>
     </tr>
 
