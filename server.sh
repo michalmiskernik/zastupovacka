@@ -1,1 +1,1 @@
-php -S 0.0.0.0:8000 -t www router.php
+php -S $1 -t www router.php
