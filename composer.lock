@@ -1,6 +1,10 @@
 {
-    "hash": "7facc0ce92e39125ea8a9e95fb8799c9",
+    "hash": "081c956c18ae380e5f8deddaf9d65bbd",
     "packages": [
+        {
+            "package": "dg/dibi",
+            "version": "v2.0.1"
+        },
         {
             "package": "nette/nette",
             "version": "v2.0.3"

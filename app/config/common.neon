@@ -19,6 +19,14 @@ nette:
       user: %database.user%
       password: %database.password%
 
+dibi:
+  driver: pdo
+  dsn: '%database.driver%:host=%database.host%;dbname=%database.dbname%'
+  username: %database.user%
+  password: %database.password%
+  lazy: true
+  profiler: true
+
 services:
   database: @Nette\Database\Connection
   

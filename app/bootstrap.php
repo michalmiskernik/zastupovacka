@@ -9,6 +9,7 @@ use Nette\Diagnostics\Debugger,
 
 // Load Nette Framework
 require LIBS_DIR . '/nette/nette/Nette/loader.php';
+require LIBS_DIR . '/.composer/autoload.php';
 
 // Configure application
 $configurator = new Nette\Config\Configurator;
@@ -24,12 +25,17 @@ $configurator->enableDebugger(__DIR__ . '/../log');
 $configurator->setTempDirectory(__DIR__ . '/../temp');
 $configurator->createRobotLoader()
 	->addDirectory(APP_DIR)
-	->addDirectory(LIBS_DIR)
 	->register();
 
 // Create Dependency Injection container from config.neon file
 $configurator->addConfig(__DIR__ . '/config/config.neon',
-  $configurator->productionMode ? $configurator::PRODUCTION : $configurator::DEVELOPMENT);
+	$configurator->productionMode ? $configurator::PRODUCTION : $configurator::DEVELOPMENT);
+
+// Setup dibi
+$configurator->onCompile[] = function ($configurator, $compiler) {
+	$compiler->addExtension('dibi', new DibiNetteExtension);
+};
+
 $container = $configurator->createContainer();
 
 // Setup router
