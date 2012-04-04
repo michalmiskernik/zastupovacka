@@ -1,0 +1,12 @@
+{
+    "hash": "7facc0ce92e39125ea8a9e95fb8799c9",
+    "packages": [
+        {
+            "package": "nette/nette",
+            "version": "v2.0.3"
+        }
+    ],
+    "aliases": [
+
+    ]
+}
